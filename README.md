@@ -40,7 +40,7 @@ Once data is loaded, you can start the database server.
     docker-compose run --rm --service-ports fuseki --tdb2 --loc databases/testDB /testDB
 
 - databases/\<database-name>: Path of the testDB folder inside docker container.
-- /testDB: SPARQL endpoint name.
+- /testDB: SPARQL dataset endpoint name.
 
 To allow data updates on the database, add `--update`. Updates are persisted.
 
@@ -59,6 +59,28 @@ for more information on how to spawn fuseki docker container.
 
 Once database has started, you can access SPARQL API by visiting http://localhost:3030/\<endpoint-name>
 
-### Querying database
+The service endpoints are:
 
-WIP
+- HTTP: http://localhost:3030/\<endpoint-name>/data
+- Query: http://localhost:3030/\<endpoint-name>/query or http://localhost:3030/\<endpoint-name>/sparql
+- Update: http://localhost:3030/\<endpoint-name>/update
+
+### Querying database
+This package contains helper scripts in bin folder to query the database. `s-query --service=service-endpoint "your sparql query"`. Here is an example -
+
+    #export path of bin folder
+    export PATH=$PATH:$PWD/bin
+
+    s-query --service=http://localhost:3030/testDB "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT * WHERE {
+    ?sub ?pred ?obj .
+    } LIMIT 10"
+
+### Put data in Database with data file
+You can use below command to add data into database.
+
+    s-put http://localhost:3030/testDB/data default data/ccp.ttl --verbose
+
+- testDB: SPARQL dataset endpoint name.
+- default: name of the graph
+- data/massSpec.ttl: relative path of file from current directory
