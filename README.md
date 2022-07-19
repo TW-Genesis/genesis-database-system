@@ -64,10 +64,10 @@ Once database has started, you can access following SPARQL API services:
 - Update: `http://localhost:3030/<endpoint-name>/update`
 
 ### Querying database
-This package contains helper scripts in bin folder to query the database. `s-query --service=service-endpoint "your sparql query"`. Here is an example -
+This package contains helper scripts in scripts folder to query the database. `s-query --service=service-endpoint "your sparql query"`. Here is an example -
 
-    #export path of bin folder
-    export PATH=$PATH:$PWD/bin
+    #export path of scripts folder
+    export PATH=$PATH:$PWD/scripts
 
     s-query --service=http://localhost:3030/testDB "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     SELECT * WHERE {
