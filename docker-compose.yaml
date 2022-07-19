@@ -21,7 +21,7 @@ services:
     ## Example:
     ## command: [ "--tdb2", "--update", "--loc", "databases/DB2", "/ds" ]
     build:
-      context: .
+      context: docker
       dockerfile: Dockerfile
     image: fuseki
     ports:
