@@ -1,0 +1,21 @@
+version: "3.0"
+services:
+    load-data:
+        image: genesis/rdf-data-server:latest
+        volumes:
+            - genesis-database.rdf-data-server.logs:/fuseki/logs
+            - genesis-database.rdf-data-server.databases:/fuseki/databases
+            - ./data/${DATA}:/fuseki/data.ttl
+        command: ["--load-data"]
+    
+    start-server:
+        image: genesis/rdf-data-server:latest
+        ports:
+            - 3030:3030
+        volumes:
+            - genesis-database.rdf-data-server.logs:/fuseki/logs
+            - genesis-database.rdf-data-server.databases:/fuseki/databases
+
+volumes:
+    genesis-database.rdf-data-server.logs:
+    genesis-database.rdf-data-server.databases:
