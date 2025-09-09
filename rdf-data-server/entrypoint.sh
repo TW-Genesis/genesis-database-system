@@ -6,5 +6,6 @@ if [ $1 == "--load-data" ]
 then
 	exec "./apache-jena-$JENA_VERSION/bin/tdb2.tdbloader" --loc "${FUSEKI_DIR}/databases/genesis" "${FUSEKI_DIR}/data.ttl"
 else
-	exec "$JAVA_HOME/bin/java" $JAVA_OPTIONS -jar "${FUSEKI_DIR}/${FUSEKI_JAR}" --tdb2 --loc "databases/genesis" "/genesis"
+	exec "$JAVA_HOME/bin/java" $JAVA_OPTIONS -jar "${FUSEKI_DIR}/${FUSEKI_JAR}" --tdb2 --loc "databases/genesis" "/genesis" --jetty.host=0.0.0.0
 fi
+
