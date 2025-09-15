@@ -17,9 +17,9 @@
 
 ## This Dockefile builds a reduced footprint container.
 
-ARG OPENJDK_VERSION=18
-ARG ALPINE_VERSION=3.16.0
-ARG JENA_VERSION="4.5.0"
+ARG OPENJDK_VERSION=21
+ARG ALPINE_VERSION=3.19.0
+ARG JENA_VERSION="4.10.0"
 
 # Internal, passed between stages.
 ARG FUSEKI_DIR=/fuseki
@@ -28,7 +28,7 @@ ARG JAVA_MINIMAL=/opt/java-minimal
 ARG JENA_ZIP=apache-jena-${JENA_VERSION}.zip
 
 ## ---- Stage: Download and build java.
-FROM openjdk:${OPENJDK_VERSION}-alpine AS base
+FROM openjdk:${OPENJDK_VERSION}-slim AS base
 
 ARG JAVA_MINIMAL
 ARG JENA_VERSION
@@ -41,8 +41,8 @@ ARG ZIP_URL=${REPO}/apache-jena/${JENA_VERSION}/${JENA_ZIP}
 RUN [ "${JENA_VERSION}" != "" ] || { echo -e '\n**** Set JENA_VERSION ****\n' ; exit 1 ; }
 RUN echo && echo "==== Docker build for Apache Jena Fuseki ${JENA_VERSION} ====" && echo
 
-# Alpine: For objcopy used in jlink
-RUN apk add --no-cache curl binutils
+# Install required tools for Debian-based image
+RUN apt-get update && apt-get install -y curl binutils unzip && rm -rf /var/lib/apt/lists/*
 
 ## -- Fuseki installed and runs in /fuseki.
 WORKDIR $FUSEKI_DIR
@@ -82,10 +82,15 @@ ADD log4j2.properties .
 # -H : no home directorry
 # -D : no password
 
-RUN adduser -H -D fuseki fuseki
+RUN adduser --disabled-password --gecos "" fuseki
 
 ## ---- Stage: Build runtime
-FROM alpine:${ALPINE_VERSION}
+FROM debian:bookworm-slim
+
+# Install minimal dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 ## Import ARGs
 ARG JENA_VERSION
