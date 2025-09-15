@@ -126,7 +126,7 @@ ENV \
 
 USER fuseki
 
-EXPOSE 3030
+EXPOSE 3033
 
 ENTRYPOINT ["./entrypoint.sh" ]
 CMD []

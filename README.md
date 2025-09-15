@@ -44,10 +44,10 @@ which will expose SPARQL HTTP endpoint which can be used to query the database.
     
 ### Querying database
 
-After database has started, you can query the database using exposed endpoint at default port number 3030. Here is an example http request to get count of all the triples in the database:
+After database has started, you can query the database using exposed endpoint at default port number 3033. Here is an example http request to get count of all the triples in the database:
 
 ```bash
-curl --data-urlencode "query=SELECT (COUNT(?s) AS ?triples) WHERE { ?s ?p ?o }" --get http://localhost:3030/genesis
+curl --data-urlencode "query=SELECT (COUNT(?s) AS ?triples) WHERE { ?s ?p ?o }" --get http://localhost:3033/genesis
 ```
 
 which runs the SPARQL query:
