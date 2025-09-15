@@ -10,7 +10,7 @@ services:
     start-server:
         image: genesis/rdf-data-server:latest
         ports:
-            - 3030:3030
+            - 3033:3033
         volumes:
             - genesis-database.rdf-data-server.logs:/fuseki/logs
             - genesis-database.rdf-data-server.databases:/fuseki/databases
