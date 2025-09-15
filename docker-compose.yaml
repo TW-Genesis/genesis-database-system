@@ -1,4 +1,3 @@
-version: "3.0"
 services:
     load-data:
         image: genesis/rdf-data-server:latest
