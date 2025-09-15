@@ -2,7 +2,7 @@
 ## Licensed under the terms of http://www.apache.org/licenses/LICENSE-2.0
 
 ## env | sort
-if [ $1 == "--load-data" ]
+if [ "$1" = "--load-data" ]
 then
 	exec "./apache-jena-$JENA_VERSION/bin/tdb2.tdbloader" --loc "${FUSEKI_DIR}/databases/genesis" "${FUSEKI_DIR}/data.ttl"
 else
